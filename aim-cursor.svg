@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- Aiming reticle / crosshair -->
+  <circle cx="24" cy="24" r="18" fill="none" stroke="#22c55e" stroke-width="2" opacity="0.9"/>
+  <circle cx="24" cy="24" r="12" fill="none" stroke="#86efac" stroke-width="1.5" opacity="0.7"/>
+  <circle cx="24" cy="24" r="3" fill="#ef4444" stroke="#fff" stroke-width="1"/>
+  <!-- Cross lines -->
+  <line x1="24" y1="2" x2="24" y2="14" stroke="#22c55e" stroke-width="2"/>
+  <line x1="24" y1="34" x2="24" y2="46" stroke="#22c55e" stroke-width="2"/>
+  <line x1="2" y1="24" x2="14" y2="24" stroke="#22c55e" stroke-width="2"/>
+  <line x1="34" y1="24" x2="46" y2="24" stroke="#22c55e" stroke-width="2"/>
+  <!-- Corner brackets -->
+  <path d="M8 14 L8 8 L14 8" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+  <path d="M34 8 L40 8 L40 14" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+  <path d="M8 34 L8 40 L14 40" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+  <path d="M34 40 L40 40 L40 34" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+</svg>

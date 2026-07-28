@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Snipy Cat — $SNIPYCAT | Solana Meme Sniper</title>
+  <meta name="description" content="The Snipy Cat doesn't chase laser pointers—he snipes green candles, steals memes, and lands every shot straight to the moon. $SNIPYCAT on Solana." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sniper: {
+              dark: '#0a1f0a',
+              deeper: '#061406',
+              mid: '#14532d',
+              green: '#16a34a',
+              lime: '#4ade80',
+              glow: '#86efac',
+              camo: '#1a3a1a',
+            },
+            squirrel: {
+              fur: '#8B5A2B',
+              coat: '#A0522D',
+              tan: '#C4A484',
+              cream: '#E8D5B7',
+              nut: '#D2691E',
+              dark: '#5C3317',
+              bark: '#3D2314',
+            }
+          },
+          fontFamily: {
+            display: ['"Black Ops One"', 'system-ui', 'sans-serif'],
+            body: ['"Rajdhani"', 'system-ui', 'sans-serif'],
+            mono: ['"Share Tech Mono"', 'monospace'],
+          },
+          animation: {
+            'scope-pulse': 'scopePulse 2.4s ease-in-out infinite',
+            'float-gun': 'floatGun 3s ease-in-out infinite',
+            'scan': 'scanLine 4s linear infinite',
+            'glitch': 'glitch 3s infinite',
+            'target-spin': 'targetSpin 12s linear infinite',
+          },
+          keyframes: {
+            scopePulse: {
+              '0%, 100%': { boxShadow: '0 0 0 0 rgba(74, 222, 128, 0.5)' },
+              '50%': { boxShadow: '0 0 0 18px rgba(74, 222, 128, 0)' },
+            },
+            floatGun: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            scanLine: {
+              '0%': { transform: 'translateY(-100%)' },
+              '100%': { transform: 'translateY(100vh)' },
+            },
+            glitch: {
+              '0%, 90%, 100%': { transform: 'translate(0)' },
+              '92%': { transform: 'translate(-2px, 1px)' },
+              '94%': { transform: 'translate(2px, -1px)' },
+              '96%': { transform: 'translate(-1px, 2px)' },
+            },
+            targetSpin: {
+              '0%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(360deg)' },
+            },
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sniper-cursor: url('sniper-cursor.png') 8 16, url('sniper-cursor.svg') 8 16, crosshair;
+      --aim-cursor: url('aim-cursor.png') 24 24, url('aim-cursor.svg') 24 24, crosshair;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      cursor: var(--sniper-cursor);
+      background-color: #0a1f0a;
+      overflow-x: hidden;
+    }
+
+    a, button, .aim-zone, img, .copy-btn, iframe {
+      cursor: var(--aim-cursor) !important;
+    }
+
+    /* Camo grid + tactical atmosphere */
+    .camo-bg {
+      background-color: #0a1f0a;
+      background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(22, 163, 74, 0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(139, 90, 43, 0.12) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 100%, rgba(74, 222, 128, 0.08) 0%, transparent 40%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(74, 222, 128, 0.03) 39px,
+          rgba(74, 222, 128, 0.03) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 39px,
+          rgba(74, 222, 128, 0.03) 39px,
+          rgba(74, 222, 128, 0.03) 40px
+        );
+    }
+
+    .scope-ring {
+      border: 2px solid rgba(74, 222, 128, 0.35);
+      box-shadow:
+        inset 0 0 40px rgba(22, 163, 74, 0.15),
+        0 0 30px rgba(74, 222, 128, 0.1);
+    }
+
+    .squirrel-text {
+      color: #C4A484;
+    }
+
+    .squirrel-heading {
+      color: #E8D5B7;
+      text-shadow:
+        0 0 20px rgba(210, 105, 30, 0.35),
+        2px 2px 0 #5C3317;
+    }
+
+    .tactical-border {
+      border: 1px solid rgba(74, 222, 128, 0.35);
+      background: linear-gradient(145deg, rgba(20, 83, 45, 0.45), rgba(10, 31, 10, 0.85));
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-sniper {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 50%, #166534 100%);
+      border: 2px solid #4ade80;
+      color: #E8D5B7;
+      text-shadow: 1px 1px 0 #3D2314;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-sniper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(232, 213, 183, 0.2), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.5s;
+    }
+
+    .btn-sniper:hover::before { transform: translateX(100%); }
+
+    .btn-sniper:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 28px rgba(74, 222, 128, 0.55), 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .btn-chart {
+      background: linear-gradient(135deg, #A0522D 0%, #8B5A2B 50%, #5C3317 100%);
+      border: 2px solid #C4A484;
+      color: #E8D5B7;
+      text-shadow: 1px 1px 0 #3D2314;
+      transition: all 0.2s ease;
+    }
+
+    .btn-chart:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 28px rgba(210, 105, 30, 0.45), 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .scan-overlay::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(74, 222, 128, 0.6), transparent);
+      animation: scanLine 4s linear infinite;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    @keyframes scanLine {
+      0% { top: 0; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    .step-num {
+      font-family: 'Black Ops One', sans-serif;
+      background: linear-gradient(135deg, #16a34a, #4ade80);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .ca-box {
+      font-family: 'Share Tech Mono', monospace;
+      letter-spacing: 0.04em;
+    }
+
+    .crosshair-deco {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border: 1px solid rgba(74, 222, 128, 0.25);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .crosshair-deco::before,
+    .crosshair-deco::after {
+      content: '';
+      position: absolute;
+      background: rgba(74, 222, 128, 0.35);
+    }
+
+    .crosshair-deco::before {
+      left: 50%;
+      top: 10%;
+      bottom: 10%;
+      width: 1px;
+      transform: translateX(-50%);
+    }
+
+    .crosshair-deco::after {
+      top: 50%;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      transform: translateY(-50%);
+    }
+
+    .banner-mask {
+      mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    }
+
+    .toast {
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Corner HUD brackets */
+    .hud-frame {
+      position: relative;
+    }
+
+    .hud-frame::before,
+    .hud-frame::after {
+      content: '';
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-color: #4ade80;
+      border-style: solid;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .hud-frame::before {
+      top: -2px;
+      left: -2px;
+      border-width: 2px 0 0 2px;
+    }
+
+    .hud-frame::after {
+      bottom: -2px;
+      right: -2px;
+      border-width: 0 2px 2px 0;
+    }
+  </style>
+</head>
+<body class="camo-bg font-body text-squirrel-cream antialiased">
+
+  <!-- Floating scan line -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 scan-overlay opacity-40" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <nav class="relative z-50 border-b border-sniper-lime/20 bg-sniper-deeper/80 backdrop-blur-md sticky top-0">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <a href="#top" class="aim-zone flex items-center gap-3 group">
+        <img src="logo.png" alt="The Snipy Cat logo" class="w-12 h-12 rounded-full object-cover ring-2 ring-sniper-lime/60 group-hover:ring-sniper-lime transition animate-scope-pulse" />
+        <div>
+          <span class="font-display text-lg sm:text-xl squirrel-heading tracking-wide block leading-none">THE SNIPY CAT</span>
+          <span class="font-mono text-xs text-sniper-lime tracking-widest">$SNIPYCAT</span>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center gap-6 font-semibold text-squirrel-tan uppercase tracking-wider text-sm">
+        <a href="#about" class="hover:text-sniper-lime transition">About</a>
+        <a href="#howtobuy" class="hover:text-sniper-lime transition">How to Buy</a>
+        <a href="#chart" class="hover:text-sniper-lime transition">Chart</a>
+      </div>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="https://t.me/TheSnipyCat" target="_blank" rel="noopener noreferrer" class="aim-zone" title="Telegram">
+          <img src="tg.png" alt="Telegram" class="w-9 h-9 sm:w-10 sm:h-10 object-contain hover:scale-110 transition drop-shadow-lg" />
+        </a>
+        <a href="https://x.com/TheSnipyCat" target="_blank" rel="noopener noreferrer" class="aim-zone" title="Twitter / X">
+          <img src="x.png" alt="Twitter X" class="w-9 h-9 sm:w-10 sm:h-10 object-contain hover:scale-110 transition drop-shadow-lg" />
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="top" class="relative z-10">
+    <div class="relative w-full overflow-hidden banner-mask">
+      <img src="banner.png" alt="The Snipy Cat banner" class="w-full max-h-[70vh] object-cover object-center opacity-90" />
+      <div class="absolute inset-0 bg-gradient-to-t from-sniper-deeper via-sniper-dark/40 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-sniper-deeper/70 via-transparent to-sniper-deeper/50"></div>
+
+      <!-- Decorative crosshairs -->
+      <div class="crosshair-deco top-8 left-8 hidden sm:block animate-target-spin" style="animation-duration: 20s;"></div>
+      <div class="crosshair-deco bottom-16 right-12 hidden sm:block animate-target-spin" style="animation-duration: 16s; animation-direction: reverse;"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 -mt-24 sm:-mt-32 relative z-20 text-center">
+      <div class="inline-block mb-4 animate-float-gun">
+        <img src="logo.png" alt="Snipy Cat" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover ring-4 ring-sniper-lime shadow-[0_0_40px_rgba(74,222,128,0.45)] mx-auto" />
+      </div>
+
+      <p class="font-mono text-sniper-lime text-sm sm:text-base tracking-[0.35em] uppercase mb-2">TARGET LOCKED · SOLANA</p>
+      <h1 class="font-display text-4xl sm:text-6xl md:text-7xl squirrel-heading animate-glitch mb-3">
+        THE SNIPY CAT
+      </h1>
+      <p class="font-mono text-xl sm:text-2xl text-squirrel-nut tracking-widest mb-6">$SNIPYCAT</p>
+
+      <p class="text-base sm:text-xl squirrel-text max-w-2xl mx-auto leading-relaxed mb-8 font-medium">
+        The Snipy Cat doesn't chase laser pointers—he snipes green candles, steals memes, and lands every shot straight to the moon.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-8">
+        <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=DpphSvKEo4Lyu7yHqMc5pJ4WzuqbP4Y3VQzEjZ8wpump"
+           target="_blank" rel="noopener noreferrer"
+           class="btn-sniper aim-zone font-display text-lg sm:text-xl px-8 py-3.5 rounded-sm tracking-wider uppercase">
+          ◎ Buy Now
+        </a>
+        <a href="https://dexscreener.com/solana/DpphSvKEo4Lyu7yHqMc5pJ4WzuqbP4Y3VQzEjZ8wpump"
+           target="_blank" rel="noopener noreferrer"
+           class="btn-chart aim-zone font-display text-lg sm:text-xl px-8 py-3.5 rounded-sm tracking-wider uppercase">
+          ◎ Chart
+        </a>
+      </div>
+
+      <!-- Contract Address -->
+      <div class="hud-frame tactical-border rounded-sm p-4 sm:p-5 max-w-xl mx-auto">
+        <p class="font-mono text-xs text-sniper-lime tracking-widest uppercase mb-2">Contract Address · CA</p>
+        <div class="flex flex-col sm:flex-row items-center gap-3">
+          <code id="ca-address" class="ca-box text-squirrel-cream text-sm sm:text-base break-all flex-1 text-center sm:text-left">DpphSvKEo4Lyu7yHqMc5pJ4WzuqbP4Y3VQzEjZ8wpump</code>
+          <button type="button" id="copy-ca" class="copy-btn aim-zone btn-sniper font-display text-sm px-5 py-2 rounded-sm uppercase tracking-wider whitespace-nowrap">
+            Copy CA
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about" class="relative z-10 max-w-6xl mx-auto px-4 py-20 sm:py-28">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div class="relative scope-ring rounded-full p-3 w-fit mx-auto md:mx-0 animate-scope-pulse">
+        <img src="logo.png" alt="The Snipy Cat" class="w-56 h-56 sm:w-72 sm:h-72 rounded-full object-cover" />
+        <div class="absolute -top-2 -right-2 w-16 h-16 border border-sniper-lime/40 rounded-full flex items-center justify-center font-mono text-[10px] text-sniper-lime tracking-wider">
+          SCOPE
+        </div>
+      </div>
+      <div>
+        <p class="font-mono text-sniper-lime text-sm tracking-[0.3em] uppercase mb-2">Mission Briefing</p>
+        <h2 class="font-display text-3xl sm:text-5xl squirrel-heading mb-5">One Cat. One Shot. One Moon.</h2>
+        <p class="squirrel-text text-lg leading-relaxed mb-4">
+          While other meme cats nap in cardboard boxes, <span class="text-squirrel-cream font-semibold">The Snipy Cat</span> is perched in the Solana trenches—scope dialed in, finger on the trigger, waiting for the next green candle.
+        </p>
+        <p class="squirrel-text text-lg leading-relaxed mb-6">
+          No laser pointers. No distractions. Just pure sniper energy: steal the meme, take the shot, send <span class="text-sniper-lime font-mono">$SNIPYCAT</span> to the moon.
+        </p>
+        <ul class="space-y-3 font-semibold text-squirrel-tan">
+          <li class="flex items-center gap-3"><span class="text-sniper-lime font-mono">▸</span> Built on Solana speed</li>
+          <li class="flex items-center gap-3"><span class="text-sniper-lime font-mono">▸</span> Community-owned meme arsenal</li>
+          <li class="flex items-center gap-3"><span class="text-sniper-lime font-mono">▸</span> Every holder is a spotter</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO BUY -->
+  <section id="howtobuy" class="relative z-10 py-20 sm:py-28 bg-sniper-deeper/60 border-y border-sniper-lime/15">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-14">
+        <p class="font-mono text-sniper-lime text-sm tracking-[0.3em] uppercase mb-2">Load Your Mag</p>
+        <h2 class="font-display text-3xl sm:text-5xl squirrel-heading mb-3">How to Buy</h2>
+        <p class="squirrel-text text-lg max-w-xl mx-auto">Acquire <span class="text-sniper-lime font-mono">$SNIPYCAT</span> on Solana in four clean shots.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <!-- Step 1 -->
+        <div class="hud-frame tactical-border rounded-sm p-6 hover:border-sniper-lime/60 transition group">
+          <div class="step-num text-5xl mb-4">01</div>
+          <h3 class="font-display text-xl text-squirrel-cream mb-2 group-hover:text-sniper-lime transition">Get a Wallet</h3>
+          <p class="squirrel-text text-sm leading-relaxed">
+            Download <span class="text-squirrel-cream">Phantom</span> or <span class="text-squirrel-cream">Solflare</span>. Create a Solana wallet and lock it down like a sniper nest.
+          </p>
+        </div>
+        <!-- Step 2 -->
+        <div class="hud-frame tactical-border rounded-sm p-6 hover:border-sniper-lime/60 transition group">
+          <div class="step-num text-5xl mb-4">02</div>
+          <h3 class="font-display text-xl text-squirrel-cream mb-2 group-hover:text-sniper-lime transition">Fund with SOL</h3>
+          <p class="squirrel-text text-sm leading-relaxed">
+            Buy SOL on an exchange, then withdraw it to your wallet address. Ammo for the trade.
+          </p>
+        </div>
+        <!-- Step 3 -->
+        <div class="hud-frame tactical-border rounded-sm p-6 hover:border-sniper-lime/60 transition group">
+          <div class="step-num text-5xl mb-4">03</div>
+          <h3 class="font-display text-xl text-squirrel-cream mb-2 group-hover:text-sniper-lime transition">Open the Swap</h3>
+          <p class="squirrel-text text-sm leading-relaxed">
+            Hit <span class="text-squirrel-cream">Buy Now</span> to open Pump.fun Swap. Paste the CA if needed and aim at <span class="font-mono text-sniper-lime">$SNIPYCAT</span>.
+          </p>
+        </div>
+        <!-- Step 4 -->
+        <div class="hud-frame tactical-border rounded-sm p-6 hover:border-sniper-lime/60 transition group">
+          <div class="step-num text-5xl mb-4">04</div>
+          <h3 class="font-display text-xl text-squirrel-cream mb-2 group-hover:text-sniper-lime transition">Pull the Trigger</h3>
+          <p class="squirrel-text text-sm leading-relaxed">
+            Swap SOL → <span class="font-mono text-sniper-lime">$SNIPYCAT</span>, confirm in your wallet, and celebrate the green candle.
+          </p>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=DpphSvKEo4Lyu7yHqMc5pJ4WzuqbP4Y3VQzEjZ8wpump"
+           target="_blank" rel="noopener noreferrer"
+           class="btn-sniper aim-zone font-display text-lg px-10 py-4 rounded-sm tracking-wider uppercase inline-block">
+          ◎ Buy $SNIPYCAT Now
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHART / DEXSCREENER -->
+  <section id="chart" class="relative z-10 max-w-6xl mx-auto px-4 py-20 sm:py-28">
+    <div class="text-center mb-10">
+      <p class="font-mono text-sniper-lime text-sm tracking-[0.3em] uppercase mb-2">Live Optics</p>
+      <h2 class="font-display text-3xl sm:text-5xl squirrel-heading mb-3">Chart</h2>
+      <p class="squirrel-text text-lg">Watch the candles through the DexScreener scope.</p>
+    </div>
+
+    <div class="hud-frame tactical-border rounded-sm p-2 sm:p-3 overflow-hidden">
+      <div class="relative w-full rounded-sm overflow-hidden bg-sniper-deeper" style="padding-top: 62%;">
+        <iframe
+          id="dex-embed"
+          class="absolute inset-0 w-full h-full border-0"
+          src="https://dexscreener.com/solana/DpphSvKEo4Lyu7yHqMc5pJ4WzuqbP4Y3VQzEjZ8wpump?embed=1&theme=dark&trades=0&info=0"
+          title="DexScreener Chart — $SNIPYCAT"
+          allow="clipboard-write"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-4 mt-8">
+      <a href="https://dexscreener.com/solana/DpphSvKEo4Lyu7yHqMc5pJ4WzuqbP4Y3VQzEjZ8wpump"
+         target="_blank" rel="noopener noreferrer"
+         class="btn-chart aim-zone font-display text-base px-8 py-3 rounded-sm tracking-wider uppercase">
+        Open DexScreener
+      </a>
+      <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=DpphSvKEo4Lyu7yHqMc5pJ4WzuqbP4Y3VQzEjZ8wpump"
+         target="_blank" rel="noopener noreferrer"
+         class="btn-sniper aim-zone font-display text-base px-8 py-3 rounded-sm tracking-wider uppercase">
+        Buy Now
+      </a>
+    </div>
+  </section>
+
+  <!-- TOKENOMICS / CTA STRIP -->
+  <section class="relative z-10 border-y border-sniper-lime/15 bg-gradient-to-r from-sniper-mid/30 via-squirrel-dark/20 to-sniper-mid/30 py-16">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="font-display text-2xl sm:text-4xl squirrel-heading mb-4">Join the Sniper Squad</h2>
+      <p class="squirrel-text text-lg mb-8 max-w-xl mx-auto">
+        Spot green candles. Share memes. Hold <span class="font-mono text-sniper-lime">$SNIPYCAT</span>. The moon is already in the crosshairs.
+      </p>
+      <div class="flex items-center justify-center gap-5">
+        <a href="https://t.me/TheSnipyCat" target="_blank" rel="noopener noreferrer" class="aim-zone flex flex-col items-center gap-2 group">
+          <img src="tg.png" alt="Telegram" class="w-14 h-14 object-contain group-hover:scale-110 transition" />
+          <span class="font-mono text-xs text-squirrel-tan tracking-widest uppercase">Telegram</span>
+        </a>
+        <a href="https://x.com/TheSnipyCat" target="_blank" rel="noopener noreferrer" class="aim-zone flex flex-col items-center gap-2 group">
+          <img src="x.png" alt="Twitter X" class="w-14 h-14 object-contain group-hover:scale-110 transition" />
+          <span class="font-mono text-xs text-squirrel-tan tracking-widest uppercase">Twitter</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="relative z-10 bg-sniper-deeper border-t border-sniper-lime/20 py-10">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img src="logo.png" alt="" class="w-10 h-10 rounded-full object-cover ring-1 ring-sniper-lime/40" />
+        <div>
+          <p class="font-display text-squirrel-cream text-sm">THE SNIPY CAT</p>
+          <p class="font-mono text-xs text-sniper-lime">$SNIPYCAT · SOLANA</p>
+        </div>
+      </div>
+      <p class="text-squirrel-tan/70 text-xs sm:text-sm text-center max-w-md">
+        $SNIPYCAT is a meme token for entertainment. Not financial advice. DYOR. Always verify the CA.
+      </p>
+      <p class="font-mono text-xs text-sniper-camo">© 2026 Snipy Cat</p>
+    </div>
+  </footer>
+
+  <!-- Copy toast -->
+  <div id="toast" class="toast fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-4 opacity-0 z-[100] pointer-events-none bg-sniper-mid border-2 border-sniper-lime text-squirrel-cream font-display px-6 py-3 rounded-sm shadow-[0_0_30px_rgba(74,222,128,0.4)] tracking-wider uppercase text-sm">
+    CA Copied — Target Acquired
+  </div>
+
+  <script>
+    (function () {
+      const CA = 'DpphSvKEo4Lyu7yHqMc5pJ4WzuqbP4Y3VQzEjZ8wpump';
+      const caEl = document.getElementById('ca-address');
+      const copyBtn = document.getElementById('copy-ca');
+      const toast = document.getElementById('toast');
+
+      if (caEl) caEl.textContent = CA;
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2200);
+      }
+
+      copyBtn.addEventListener('click', async function () {
+        try {
+          await navigator.clipboard.writeText(CA);
+          showToast('CA Copied — Target Acquired');
+        } catch (err) {
+          const range = document.createRange();
+          range.selectNode(caEl);
+          window.getSelection().removeAllRanges();
+          window.getSelection().addRange(range);
+          document.execCommand('copy');
+          window.getSelection().removeAllRanges();
+          showToast('CA Copied — Target Acquired');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
